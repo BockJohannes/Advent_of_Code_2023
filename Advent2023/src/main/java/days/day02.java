@@ -92,7 +92,7 @@ public class day02 {
 			part2.getAndAdd(getPowerOfCubes(value));
 		});
 		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 1 = " + part2);
+		System.out.println("Part 2 = " + part2);
 	}
 
 }
