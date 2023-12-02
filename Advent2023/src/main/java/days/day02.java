@@ -6,14 +6,23 @@ import common.AdventReader;
 
 public class day02 {
 	
+	enum Color {
+	       RED(12), GREEN(13), BLUE(14);
+	       private final int value;
+
+	       Color(int value) {
+	           this.value = value;
+	       }
+
+	       public int getValue() {
+	           return value;
+	       }
+	   }
+	
 	public static boolean isGamePossible (String input) {
 		
 		input = input.substring(input.indexOf(":") + 2).trim();
 		String[] sets = input.split(";");
-		
-		final int RED = 12;
-		final int GREEN = 13;
-		final int BLUE = 14;
 		
 		for (String set : sets) {
 			String[] colors = set.split(",");
@@ -24,13 +33,13 @@ public class day02 {
 		        String farbe = color.replaceAll("[^a-zA-Z]+", "").trim();
 		        switch(farbe) {
 		        	case "blue":
-		        		if (number>BLUE) {return false;}
+		        		if (number>Color.BLUE.getValue()) {return false;}
 		        		break;
 		        	case "red":
-		        		if (number>RED) {return false;}
+		        		if (number>Color.RED.getValue()) {return false;}
 		        		break;
 		        	case "green":
-		        		if (number>GREEN) {return false;}
+		        		if (number>Color.GREEN.getValue()) {return false;}
 		        		break;
 		        }
 			}
@@ -38,7 +47,7 @@ public class day02 {
 		
 		return true;
 	}
-	
+		
 	public static int getPowerOfCubes(String input) {
 		int power = 0;
 
@@ -77,7 +86,7 @@ public class day02 {
 		AdventReader.read("02")
 		.forEach(value -> {
 			gameID.incrementAndGet();
-			if(isGamePossible(value)==true) {
+			if(isGamePossible(value)) {
 				part1.getAndAdd(gameID.get());
 			}
 			part2.getAndAdd(getPowerOfCubes(value));
