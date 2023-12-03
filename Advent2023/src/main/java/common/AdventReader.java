@@ -1,7 +1,5 @@
 package common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.net.URL;
@@ -22,12 +20,13 @@ public class AdventReader {
     		return null;
     	}
     }
-	
-    @AllArgsConstructor
-    @Getter
-    public static class IndexedLine {
-        long index;
-        String line;
+    
+    public static char[][] parseSchematic(List<String> lines) {
+        char[][] schematic = new char[lines.size()][lines.get(0).length()];
+        for (int i = 0; i < lines.size(); i++) {
+            schematic[i] = lines.get(i).toCharArray();
+        }
+        return schematic;
     }
 
 }
