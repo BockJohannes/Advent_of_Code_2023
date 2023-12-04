@@ -36,9 +36,7 @@ public class day01 {
 				sum.addAndGet(combineFirstAndLastDigit(value));
 				sum2.addAndGet(combineFirstAndLastDigit(replaceWords(value)));
 			});
-		System.out.println("Part 1 = " + sum);
-		System.out.println("Part 2 = " + sum2);
-		
+		AdventReader.printResult(sum.get(), sum2.get());	
 	}
 
 }

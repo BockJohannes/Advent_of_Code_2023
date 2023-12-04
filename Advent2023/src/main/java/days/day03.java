@@ -135,8 +135,7 @@ public class day03 {
 	        	}
 	        }
 	    }
-		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 2 = " + part2);
+		AdventReader.printResult(part1, part2);
 	}
 
 }

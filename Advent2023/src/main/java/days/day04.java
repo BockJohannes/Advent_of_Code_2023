@@ -76,8 +76,6 @@ public class day04 {
         for (int i = 1; i <= inputListe.size(); i++) {
         	part2 += scratchcards[i][1];
         }
-        
-		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 2 = " + part2);	
+        AdventReader.printResult(part1.get(), part2);
 	}
 }

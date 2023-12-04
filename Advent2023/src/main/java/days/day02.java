@@ -91,8 +91,7 @@ public class day02 {
 			}
 			part2.getAndAdd(getPowerOfCubes(value));
 		});
-		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 2 = " + part2);
+		AdventReader.printResult(part1.get(), part2.get());
 	}
 
 }
