@@ -33,4 +33,9 @@ public class AdventReader {
 		System.out.println("Part 1 = " + part1);
 		System.out.println("Part 2 = " + part2);	
     }
+    
+    public static void printResult(long part1, long part2) {
+		System.out.println("Part 1 = " + part1);
+		System.out.println("Part 2 = " + part2);	
+    }
 }
