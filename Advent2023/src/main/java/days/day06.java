@@ -1,19 +1,18 @@
 package days;
 
+import java.util.Arrays;
+
 import common.AdventReader;
 
 public class day06 {
 
-	public static class Boat {
-		long speed = 0;
-		
+	public static class Boat {		
 		public static long charge(long milliseconds) {
 			return milliseconds;	
 		}
 	}
 	
-	public static long winTheRace(String part, long[] raceTime, long[] raceDistance) {
-		
+	public static long winTheRace(long[] raceTime, long[] raceDistance) {
 		long[] record = new long[raceTime.length];
 
 		for(int i=0; i<raceTime.length; i++) {
@@ -24,19 +23,15 @@ public class day06 {
 		        }
 		    }
 		}
-		long value = part.equals("part1") ? record[0] * record[1] * record[2] * record[3] : record[0];
-		return value;
+		return Arrays.stream(record).reduce(1, Math::multiplyExact);
 	}
 	
 	public static void main(String[] args) {
+		long[] time_part1 = {60, 94, 78, 82}, 	distance_part1 = {475, 2138, 1015, 1650};
+		long[] time_part2 = {60947882L}, 		distance_part2 = {475213810151650L};
 		
-		long[] time_part1 = {60, 94, 78, 82};
-		long[] distance_part1 = {475, 2138, 1015, 1650};
-		long[] time_part2 = {60947882L};
-		long[] distance_part2 = {475213810151650L};
-		
-		long part1 = winTheRace("part1", time_part1, distance_part1);
-		long part2 = winTheRace("part2", time_part2, distance_part2);
+		long part1 = winTheRace(time_part1, distance_part1);
+		long part2 = winTheRace(time_part2, distance_part2);
 		AdventReader.printResult(part1, part2);
 	}
 }
