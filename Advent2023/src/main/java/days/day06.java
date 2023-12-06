@@ -17,14 +17,12 @@ public class day06 {
 		long[] record = new long[raceTime.length];
 
 		for(int i=0; i<raceTime.length; i++) {
-			long countWins = 0;
 		    for (long milliseconds = 0; raceTime[i] >= 0; raceTime[i]--, milliseconds++) {
 		        if (Boat.charge(milliseconds) * raceTime[i] > raceDistance[i]) {
-		            countWins++;
+		        	record[i] = raceTime[i] - (Boat.charge(milliseconds)-1);
+		            break;
 		        }
 		    }
-			record[i] = countWins;
-
 		}
 		long value = part.equals("part1") ? record[0] * record[1] * record[2] * record[3] : record[0];
 		return value;
