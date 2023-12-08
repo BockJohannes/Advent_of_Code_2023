@@ -19,7 +19,7 @@ public class day08 {
 		while(i<leftRight.length) {
 			steps++;
 			String[] directions = network.get(start);
-			start = (leftRight[i] == '1') ? directions[1] : directions[0];
+			start = (leftRight[i] == 'R') ? directions[1] : directions[0];
 			for (String value : end) {
 			    if(value.equals(start)) {
 			        return steps;
@@ -35,7 +35,7 @@ public class day08 {
 		
 		List<String> inputListe = AdventReader.read("08");
 		
-		char[] leftRight = inputListe.get(0).replaceAll("L", "0").replaceAll("R", "1").toCharArray();
+		char[] leftRight = inputListe.get(0).toCharArray();
 		inputListe.subList(0, 2).clear();
 		
 		Map<String, String[]> network = new HashMap<>();
