@@ -3,13 +3,16 @@ package days;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import common.AdventMath;
 import common.AdventReader;
 
 public class day08 {
 	
-	public static int getSteps(char[] leftRight, Map<String, String[]> network, String start, String end) {
+	public static int getSteps(char[] leftRight, Map<String, String[]> network, String start, ArrayList<String> end) {
 		
 		int steps = 0;
 		int i = 0;
@@ -17,33 +20,13 @@ public class day08 {
 			steps++;
 			String[] directions = network.get(start);
 			start = (leftRight[i] == '1') ? directions[1] : directions[0];
-			if(start.equals(end)) return steps;
-			i++;
-			i = (i == leftRight.length) ? 0 : i;
-		}
-		return -1;	
-	}
-	
-	public static long getStepsPart2(char[] leftRight, Map<String, String[]> network, ArrayList<String> start,ArrayList<String> end) {
-		
-		long steps = 0;
-		int i = 0;
-		while(i<leftRight.length) {
-			int count = 0;
-			steps++;
-			for (int j = 0; j < start.size(); j++) {
-				String s = start.get(j);
-			    String[] directions = network.get(s);
-			    start.set(j, (leftRight[i] == '1') ? directions[1] : directions[0]);
-			    for (String str : end) {
-				    if(str.equals(s)) {
-				        count++;
-				    }
+			for (String value : end) {
+			    if(value.equals(start)) {
+			        return steps;
 			    }
-			}
+		    }
 			i++;
 			i = (i == leftRight.length) ? 0 : i;
-			if(count == start.size()) return steps;
 		}
 		return -1;	
 	}
@@ -62,6 +45,11 @@ public class day08 {
 			network.put(place, directions);
 		}
 		
+		//Part 1
+		ArrayList<String> end = new ArrayList<>(Arrays.asList("ZZZ"));
+		int stepsPart1 = getSteps(leftRight, network, "AAA", end);
+				
+		//Part 2
 		ArrayList<String> endA = new ArrayList<>();
 		ArrayList<String> endZ = new ArrayList<>();
 		
@@ -75,9 +63,12 @@ public class day08 {
 		    }
 		}
 		
-		int stepsPart1 = getSteps(leftRight, network, "AAA", "ZZZ");
-		long stepsPart2 = getStepsPart2(leftRight, network, endA, endZ);
-
-		AdventReader.printResult(stepsPart1, stepsPart2);
+		List<Integer> part2 = new ArrayList<>();
+		for (String start : endA) {
+			part2.add(getSteps(leftRight, network, start, endZ));
+		}
+		BigInteger stepsPart2 = AdventMath.getLCM(part2);
+		
+		AdventReader.printResult(stepsPart1, stepsPart2.longValue());
 	}
 }
