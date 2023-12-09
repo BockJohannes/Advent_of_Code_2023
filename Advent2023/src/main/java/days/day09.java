@@ -18,9 +18,9 @@ public class day09 {
         return part1 ? sequenz.get(sequenz.size() - 1) + nextNumber : sequenz.get(0) - nextNumber;
     }
 
-    public static int getNext(List<List<Integer>> p, boolean part1) {
+    public static int getNext(List<List<Integer>> inputs, boolean part1) {
         int sum = 0;
-        for (List<Integer> sequenz : p) {
+        for (List<Integer> sequenz : inputs) {
             sum += getDifferences(sequenz, part1);
         }
         return sum;
