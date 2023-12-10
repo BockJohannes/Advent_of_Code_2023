@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 
 public class AdventReader {
 	
+    // ------------------------------------
+    // ---------- read .txt file ----------
+    // ------------------------------------
+	
     @SneakyThrows
     public static List<String> read(String fileName) {
     	try {
@@ -21,9 +25,31 @@ public class AdventReader {
     	}
     }
     
-    // ------------------------------------------------------
-    // ---------- Work with Two-Dimensional Arrays ----------
-    // ------------------------------------------------------
+    // -----------------------------------------
+    // ----------  generic Pair class ----------
+    // -----------------------------------------
+    
+	public static class Pair<K, V> {
+	    private K key;
+	    private V value;
+
+	    public Pair(K key, V value) {
+	        this.key = key;
+	        this.value = value;
+	    }
+
+	    public K getKey() {
+	        return key;
+	    }
+
+	    public V getValue() {
+	        return value;
+	    }
+	}
+    
+    // -----------------------------------------------------------
+    // ---------- Work with Two-Dimensional char Arrays ----------
+    // -----------------------------------------------------------
     
     public static char[][] parseSchematic(List<String> lines) {
         char[][] schematic = new char[lines.size()][lines.get(0).length()];
@@ -59,13 +85,10 @@ public class AdventReader {
     // ---------- Output of the results ----------
     // -------------------------------------------
     
-    public static void printResult(int part1, int part2) {
-		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 2 = " + part2);	
-    }
-    
-    public static void printResult(long part1, long part2) {
-		System.out.println("Part 1 = " + part1);
-		System.out.println("Part 2 = " + part2);	
+    public static <T, U> void printResult(T part1, U part2) {
+        part1 = part1 != null ? part1 : (T) (String) "---";
+        part2 = part2 != null ? part2 : (U) (String) "---";;
+        System.out.println("Part 1 = " + part1);
+        System.out.println("Part 2 = " + part2);
     }
 }
