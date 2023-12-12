@@ -6,72 +6,36 @@ import java.util.Map;
 
 public class Poker {
 	
-	private static Map<String, Integer> cardLabel = new HashMap<>() {{
-	    put("Z", 14);
-	    put("Y", 13);
-	    put("X", 12);
-	    put("W", 11);
-	    put("V", 10);
-	    put("9", 9);
-	    put("8", 8);
-	    put("7", 7);
-	    put("6", 6);
-	    put("5", 5);
-	    put("4", 4);
-	    put("3", 3);
-	    put("2", 2);
-	}};
-	
-	public static int getcardValue(String string) {
-		int value = cardLabel.get(string);
-		return value;
-	}
-
 	public static String moveJocker(String hand) {
-		StringBuilder stringWithoutJ = new StringBuilder();
-	    StringBuilder stringWithJ = new StringBuilder();
+		StringBuilder stringWithoutW = new StringBuilder();
+	    StringBuilder stringWithW = new StringBuilder();
 
 	    for (char c : hand.toCharArray()) {
-	    	if (c != 'W') {
-	    		stringWithoutJ.append(c);
-	    	} else {
-	    		stringWithJ.append(c);
-	         	}
+	    	if (c != 'W') {stringWithoutW.append(c);} 
+	    	else {stringWithW.append(c);}
 	    }
-
-	    return replaceJocker(stringWithoutJ.toString() + stringWithJ.toString());
-	   
+	    System.out.println(stringWithoutW + "   " + stringWithW);
+	    return replaceJocker(stringWithoutW.toString() + stringWithW.toString());  
 	}
-	
-	
-	private static String replaceJocker(String oldHand) {
 		
-		Map<Character, Integer> frequencyMap = new HashMap<>();
-		char[] hand = oldHand.toCharArray();
-        for (char c : hand) {
-            if (frequencyMap.containsKey(c)) {
-                frequencyMap.put(c, frequencyMap.get(c) + 1);
-            } else {
-                frequencyMap.put(c, 1);
-            }
-        }
-        
-        char mostFrequentChar = 0;
-        int maxFrequency = 0;
-        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
-            if (entry.getValue() > maxFrequency) {
-                mostFrequentChar = entry.getKey();
-                maxFrequency = entry.getValue();
-            }
-        }
-
-        for (int i = 0; i < hand.length; i++) {
-            if (hand[i] == 'W') {
-                hand[i] = mostFrequentChar;
-            }
-        }
-        return String.valueOf(hand);
-	}
+	public static String replaceJocker(String text) {
+	        Map<Character, Integer> charFrequency = new HashMap<>();
+	        for (char c : text.toCharArray()) {
+	            if (c != '-') {
+	                charFrequency.put(c, charFrequency.getOrDefault(c, 0) + 1);
+	            }
+	        }
+	        char mostCommonChar = 'Z';
+	        int maxFrequency = 0;
+	        for (Map.Entry<Character, Integer> entry : charFrequency.entrySet()) {
+	            if (entry.getValue() > maxFrequency || (entry.getValue() == maxFrequency && entry.getKey() > mostCommonChar)) {
+	                mostCommonChar = entry.getKey();
+	                maxFrequency = entry.getValue();
+	            }
+	        }
+	        String newString = text.replace('-', mostCommonChar);
+	        return newString;
+	    }
 	
 	public static String evaluateHand(char[] hand) {
         if (isFiveOfAKind(hand)) {
@@ -125,5 +89,4 @@ public class Poker {
 	    }
 	    return false;
 	}
-	
 }

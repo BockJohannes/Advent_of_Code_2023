@@ -14,4 +14,13 @@ public class AdventMath {
         return bigIntegers.stream()
                 .reduce(BigInteger.ONE, (a, b) -> a.multiply(b).divide(a.gcd(b)));
     }
+    
+	public static List<Integer> getCalculateDifferences(List<Integer> numbers) {
+        List<Integer> differences = new ArrayList<>();
+        for (int i = 0; i < numbers.size() - 1; i++) {
+            int diff = numbers.get(i + 1) - numbers.get(i);
+            differences.add(diff);
+        }
+        return differences;
+    }
 }

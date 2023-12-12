@@ -32,15 +32,19 @@ public class day10 {
 	            for (int j = 0; j < startX.size(); j++) {
 	                int x = startX.get(j);
 	                int y = startY.get(j);
+	                //up
 	                if (x > 0 && (grid[x-1][y] == '7' || grid[x-1][y] == 'F' || grid[x-1][y] == '|') && distance[x-1][y] == -1) {
 	                    distance[x-1][y] = i+1;
 	                }
+	                //down
 	                if (x < distance.length-1 && (grid[x+1][y] == 'J' || grid[x+1][y] == 'L' || grid[x+1][y] == '|') && distance[x+1][y] == -1) {
 	                    distance[x+1][y] = i+1;
 	                }
+	                //left
 	                if (y > 0 && (grid[x][y-1] == 'L' || grid[x][y-1] == 'F' || grid[x][y-1] == '-') && distance[x][y-1] == -1) {
 	                    distance[x][y-1] = i+1;
 	                }
+	                //right
 	                if (y < distance[0].length-1 && (grid[x][y+1] == 'J' || grid[x][y+1] == '7' || grid[x][y+1] == '-') && distance[x][y+1] == -1) {
 	                    distance[x][y+1] = i+1;
 	                }
