@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 public class AdventReader {
 	
@@ -70,6 +71,28 @@ public class AdventReader {
         return new int[]{-1, -1}; 
     }
     
+    public static int[][] getAllPositionsOfElement(char[][] schematic, char element) {
+        ArrayList<int[]> positions = new ArrayList<>();
+
+        for (int i = 0; i < schematic.length; i++) {
+            for (int j = 0; j < schematic[i].length; j++) {
+                if (schematic[i][j] == element) {
+                    positions.add(new int[]{i, j});
+                }
+            }
+        }
+
+        if (positions.isEmpty()) {
+            return new int[][]{{-1, -1}};
+        } else {
+            int[][] result = new int[positions.size()][2];
+            for (int k = 0; k < positions.size(); k++) {
+                result[k] = positions.get(k);
+            }
+            return result;
+        }
+    }
+    
     public static char[] findNeighbors(char[][] schematic, int[] postition) {
     	int i = postition[0];
     	int j = postition[1];
@@ -79,6 +102,15 @@ public class AdventReader {
         neighbors[2] = (j > 0) ? schematic[i][j - 1] : ' '; // left 
         neighbors[3] = (i > 0) ? schematic[i - 1][j] : ' '; // top 
         return neighbors;
+    }
+    
+    public static void printGrid (char[][] schematic) {
+		for (int y = 0; y < schematic.length; y++) {
+			for (int x = 0; x < schematic[1].length; x++) {
+				System.out.print(schematic[y][x]);
+			}
+			System.out.println();
+		}
     }
     
     // -------------------------------------------
