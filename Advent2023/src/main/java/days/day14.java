@@ -43,13 +43,13 @@ public class day14 {
 	}
 
 	private static char[][] rotate90DegreesClockwise(char[][] map) {
-		char[][] result = new char[height][width];
+		char[][] newMap = new char[height][width];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				result[x][y] = map[y][height-x-1];
+				newMap[x][y] = map[y][height-x-1];
 			}
 		}
-		return result;
+		return newMap;
 	}
 	
 	private static char[][] cycle(char[][] map) {
