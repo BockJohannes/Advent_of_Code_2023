@@ -1,87 +1,76 @@
 package days;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import common.AdventReader;
 
 public class day14 {
 	
-	public static void main(String[] args) {
+	static int width;
+	static int height;
 
-		char[][] grid = AdventReader.parseSchematic(AdventReader.read("14"));
-		int[][] rocks = AdventReader.getAllPositionsOfElement(grid, 'O');
+	public static void main(String[] args){
 		
-		char[][] gridPart1 = moveRocks(rocks, grid);
-//		char[][] gridPart2 = grid;
+		char[][] map = AdventReader.createGridFromString(AdventReader.read("14"));
+		width = map[1].length;
+		height = map.length;
 		
-//		for (int i = 0; i < 1000000000; i++) {
-//			rocks = AdventReader.getAllPositionsOfElement(gridPart2, 'O'); 
-//			gridPart2 = cycleRocks(rocks, gridPart2);
-//		}
+		long part1 = countRocks(moveRocksNorth(map));
 		
-		int part1 = countRocks(gridPart1);
-//		int part2 = countRocks(gridPart2);
-		AdventReader.printResult(part1, null);
-		
-	}
-	
-	public static char[][] moveRocks(int[][] rocks, char[][] grid) {
-
-		for (int[] rock : rocks) {
-			int y = rock[0], x = rock[1];
-			int newRockY = 	checkNorth(y,x,grid);
-			if (newRockY > 0) {
-				grid[y][x] = '.';
-				grid[y-newRockY][x] = 'O';
+		Map<String, Long> index = new HashMap<String, Long>();
+		for (long i = 0; i < 1000000000; i++) {
+			map = cycle(map);
+			String str = AdventReader.gridToString(map);
+			if (index.containsKey(str)) {
+				long delta = i - index.get(str);
+				i += delta * ((1000000000-i) / delta);
 			}
+			index.put(str, i);
 		}
-		return grid;
-	}
-	
-	public static char[][] cycleRocks(int[][] rocks, char[][] grid){
+		long part2 = countRocks(map); 
 		
-		for (int i = 0; i < 4; i++) {
-			for (int[] rock : rocks = AdventReader.getAllPositionsOfElement(grid, 'O')) {
-				int y = rock[0], x = rock[1];
-				int newRockY = 	checkNorth(y,x,grid);
-				if (newRockY > 0) {
-					grid[y][x] = '.';
-					grid[y-newRockY][x] = 'O';
-				}
-			}
-			grid = rotate90DegreesCounterClockwise(grid);	
-		}		
-		return grid;
-	}
-	
-	public static char[][] rotate90DegreesCounterClockwise(char[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-
-        char[][] result = new char[cols][rows];
-
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                result[cols - 1 - x][y] = matrix[x][y];
-            }
-        }
-        return result;
-    }
-	
-	public static int checkNorth(int y, int x, char[][] grid) {
-		int count = 1;
-		boolean north = true;
-		while (north) {
-			if  (y - count >= 0 && grid[y - count][x] == '.') count++;
-			else return count-1;
-		}
-		return count-1;
+		AdventReader.printResult(part1, part2);
 	}
 
 	public static int countRocks(char[][] newGrid) {
 		int sum = 0;
 		int[][] newRocks = AdventReader.getAllPositionsOfElement(newGrid, 'O');
 		for(int[] newRock : newRocks) {
-			sum += newGrid.length - newRock[0];
+			sum += newGrid.length - newRock[1];
 		}
 		return sum;
+	}
+
+	private static char[][] rotate90DegreesClockwise(char[][] map) {
+		char[][] result = new char[height][width];
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				result[x][y] = map[y][height-x-1];
+			}
+		}
+		return result;
+	}
+	
+	private static char[][] cycle(char[][] map) {
+		for (int i = 0; i < 4; i++) { map = rotate90DegreesClockwise(moveRocksNorth(map)); }
+		return map;
+	}
+
+	private static char[][] moveRocksNorth(char[][] map) {
+		for (int x = 0; x < width; x++) {
+			boolean move = true;
+			while (move) {
+				move = false;
+				for (int y = 1; y < height; y++) {
+					if (map[x][y] == 'O' && map[x][y-1] == '.') {
+						map[x][y] = '.';
+						map[x][y-1] = 'O';
+						move = true;
+					}
+				}
+			}
+		}
+		return map;
 	}
 }

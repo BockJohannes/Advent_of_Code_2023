@@ -113,6 +113,26 @@ public class AdventReader {
 		}
     }
     
+	public static String gridToString(char[][] map) {
+		StringBuffer b = new StringBuffer();
+		for (char[] line : map) {
+			b.append(new String(line));
+		}
+		return b.toString();
+	}
+    
+	public static char[][] createGridFromString(List<String> lines) {
+		int height = lines.size(), width = lines.get(0).length();
+		char[][] map = new char[width][height];
+		for (int y=0;y<lines.size();y++) {
+			String line = lines.get(y);
+			for (int x=0;x<line.length();x++) {
+				map[x][y] = line.charAt(x);
+			}
+		}
+		return map;
+	}
+	
     // -------------------------------------------
     // ---------- Output of the results ----------
     // -------------------------------------------
