@@ -26,6 +26,17 @@ public class AdventReader {
     	}
     }
     
+    @SneakyThrows
+    public static String readAsString(String fileName) {
+        try {
+            URL url = AdventReader.class.getClassLoader().getResource(String.format("input/%s.txt", fileName));
+            return Files.lines(Paths.get(url.toURI())).collect(Collectors.joining("\n"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     // -----------------------------------------
     // ----------  generic Pair class ----------
     // -----------------------------------------
